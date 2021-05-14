@@ -1,0 +1,53 @@
+.container {
+  min-height: 100vh;
+  padding: 0 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.newTrackerWindow {
+  width: auto;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px;
+  background-color: #11a9ac;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.activeTrackerWindow {
+  width: auto;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  background-color: #11a9ac;
+  border-radius: 5px;
+}
+
+.activeTrackerWindow p {
+  margin: 0;
+}
+
+.windowTitle {
+  margin: 0;
+}
+
+.trackerName {
+  border: 1px solid black;
+  height: 30px;
+  padding-left: 10px;
+}
+
+.btn {
+  height: 30px;
+}
+

@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Head from 'next/head';
-import ReactStopwatch from 'react-stopwatch';
 import styles from '../styles/Home.module.css';
 
 export default function Home() {
@@ -32,6 +30,7 @@ export default function Home() {
           onChange={(e) => setTrackerName(e.target.value)}
         />
         <button
+          type="button"
           disabled={false}
           className={styles.btn}
           onClick={() => setTrackerStart(new Date())}
@@ -39,6 +38,7 @@ export default function Home() {
           Start
         </button>
         <button
+          type="button"
           disabled={!trackerStart}
           className={styles.btn}
           onClick={() => setTrackerStart(null)}
@@ -46,6 +46,7 @@ export default function Home() {
           Stop
         </button>
         <button
+          type="button"
           disabled={!trackerStart}
           className={styles.btn}
           onClick={() => {

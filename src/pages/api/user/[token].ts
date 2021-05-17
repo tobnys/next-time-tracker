@@ -15,8 +15,21 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
 }
 
 export async function handleGET(token: string | string[], res: NextApiResponse) {
-  const user = await prisma.user.findFirst({
+  // Check if a user exists for the token provided, store value to our response variable.
+  let response = await prisma.user.findFirst({
     where: { token: String(token) },
+    include: { sessions: true }
   })
-  user ? res.json(user) : res.json({ user: null });
+
+  // If the user does not exist, create one and store response.
+  if(!response) {
+    response = await prisma.user.create({
+      data: {
+        token: token
+      }
+    })
+  }
+
+  // Return response
+  res.json(response);
 }

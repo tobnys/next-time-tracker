@@ -3,17 +3,30 @@ import prisma from '../../../../lib/prisma';
 
 
 // POST /api/session
-// Required fields: token, startDate
-// Optional fields: name, endDate
+// Required fields: userId, sessionStartDate, activeTime
+// Optional fields: name, sessionEndDate
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
   if(req.method === 'POST') {
-    const { title, content, authorEmail } = JSON.parse(req.body);
-    const result = await prisma.session.create({
-      data: {
-        title: title,
-        content: content,
-        author: { connect: { email: authorEmail } },
+    const { userId, name, sessionStartDate, sessionEndDate, activeTime } = JSON.parse(req.body);
+    console.log("DATATAT", JSON.parse(req.body))
+
+    const result = await prisma.user.update({
+      where: {
+        id: userId
       },
+      data: {
+        sessions: {
+          create: [{
+            name: name ? name : "",
+            sessionStartDate,
+            sessionEndDate: sessionEndDate ? sessionEndDate : new Date(),
+            activeTime,
+          }]
+        }
+      },
+      include: {
+        sessions: true
+      }
     })
     res.json(result)
   } else {

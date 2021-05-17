@@ -5,6 +5,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 20px;
 }
 
 .newTrackerWindow {
@@ -17,7 +18,6 @@
   padding: 20px;
   background-color: #11a9ac;
   border-radius: 5px;
-  margin-bottom: 20px;
 }
 
 .activeTrackerWindow {
@@ -39,6 +39,7 @@
 
 .windowTitle {
   margin: 0;
+  text-align: center;
 }
 
 .trackerName {
@@ -51,3 +52,37 @@
   height: 30px;
 }
 
+.sessionsWindow {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  background-color: #11a9ac;
+  border-radius: 5px;
+}
+
+.sessionsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+}
+
+.dataPair {
+  margin-bottom: 10px;
+}
+
+.sessionsGrid h4 {
+  margin: 0;
+  margin-bottom: 0;
+}
+
+.sessionsGrid p {
+  margin: 0;
+}
+
+.sessionCard {
+  background-color: #a6e2e3;
+  border-radius: 5px;
+  padding: 20px;
+}

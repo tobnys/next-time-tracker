@@ -34,5 +34,5 @@ yarn-error.log*
 .vercel
 
 # prisma
-/prisma
-!/prisma/schema.prisma
+prisma/*
+!prisma/schema.prisma

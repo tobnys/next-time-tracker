@@ -6,6 +6,7 @@
   justify-content: center;
   align-items: center;
   gap: 20px;
+  padding: 20px;
 }
 
 .newTrackerWindow {
@@ -64,7 +65,7 @@
 
 .sessionsGrid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 20px;
 }
 
@@ -85,4 +86,28 @@
   background-color: #a6e2e3;
   border-radius: 5px;
   padding: 20px;
+}
+
+.sortWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.sortWrapper h4 {
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+.sortBtnWrapper {
+  display: flex;
+  gap: 10px;
+}
+
+.sortButton {
+  width: 50px;
+  height: 30px;
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  border-radius: 5px;
 }

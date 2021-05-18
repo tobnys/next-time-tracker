@@ -30,11 +30,12 @@ export default function Home({ initialUser }: State) {
   const [user, setUser] = useState<User>(initialUser);
 
   // Put sessions in a separate state to avoid manipulating the user state.
-  const [sessions, setSessions] = useState<Session[]>(user && user.sessions && user.sessions);
+  const [sessions, setSessions] = useState<Session[]>(initialUser.sessions);
   
   console.log("SESSIONS", sessions)
+
   function saveSession() {
-    fetch(`http://localhost:3000/api/session/`, {
+    fetch(`http://localhost:3000/api/sessions/`, {
       method: "POST",
       body: JSON.stringify({ 
         userId: user.id,
@@ -47,6 +48,18 @@ export default function Home({ initialUser }: State) {
       .then(res => res.json())
       .then(data => {
         console.log("USER SAVE DTATA", data)
+        setSessions(data.sessions);
+      })
+      .catch(err => console.error(err));
+  }
+
+  function getSessionsFromUser(dateFilter?: string) {
+    fetch(`http://localhost:3000/api/user/${user.token}/sessions?byDateType=${dateFilter ? dateFilter : ""}`, {
+      method: "GET",
+    })
+      .then(res => res.json())
+      .then(data => {
+        setSessions(data);
       })
       .catch(err => console.error(err));
   }
@@ -83,7 +96,6 @@ export default function Home({ initialUser }: State) {
   }, [runTracker]);
 
   console.log("USER", user);
-  console.log("ELAPSED", trackerElapsed)
 
   return (
     <div className={styles.container}>
@@ -147,8 +159,20 @@ export default function Home({ initialUser }: State) {
 
       <div className={styles.sessionsWindow}>
         <h3 className={styles.windowTitle}>Session history</h3>
+        {sessions && sessions.length > 0 &&
+          <div className={styles.sortWrapper}>
+            <h4>Sort by</h4>
+            <div className={styles.sortBtnWrapper}>
+              <button className={styles.sortButton} onClick={() => getSessionsFromUser()}>All</button>
+              <button className={styles.sortButton} onClick={() => getSessionsFromUser("day")}>Day</button>
+              <button className={styles.sortButton} onClick={() => getSessionsFromUser("week")}>Week</button>
+              <button className={styles.sortButton} onClick={() => getSessionsFromUser("month")}>Month</button>
+            </div>
+          </div>
+        }
+
         <div className={styles.sessionsGrid}>
-          {user && user.sessions && user.sessions.map((session: Session, index: number) => (
+          {sessions && sessions.map((session: Session, index: number) => (
             <div key={index} className={styles.sessionCard}>
 
               {session.name ? 
@@ -194,6 +218,7 @@ export async function getServerSideProps(context: any) {
       .catch(err => console.error(err));
 
     const user = await res.json();
+
     return {
       props: {
         initialUser: user

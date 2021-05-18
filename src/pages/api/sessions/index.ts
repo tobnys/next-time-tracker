@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from '../../../../lib/prisma';
 
 
-// POST /api/session
+// POST /api/sessions
 // Required fields: userId, sessionStartDate, activeTime
 // Optional fields: name, sessionEndDate
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {

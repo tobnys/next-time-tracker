@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import prisma from '../../../../lib/prisma';
+import prisma from '../../../../../lib/prisma';
 
-// POST /api/user
+// GET /api/user/:token
 // Required fields in body: token
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
   const { token } = req.query;
@@ -20,15 +20,6 @@ export async function handleGET(token: string | string[], res: NextApiResponse) 
     where: { token: String(token) },
     include: { sessions: true }
   })
-
-  // If the user does not exist, create one and store response.
-  if(!response) {
-    response = await prisma.user.create({
-      data: {
-        token: token
-      }
-    })
-  }
 
   // Return response
   res.json(response);

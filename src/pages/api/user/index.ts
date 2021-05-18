@@ -22,16 +22,16 @@ export async function handlePOST(token: string, res: NextApiResponse) {
     where: { token: String(token) },
   })
 
-  // Return the user if it exists, else create a new user and return it
+  // Return conflict status if the user exists, else create a new user and return it
   if(user) {
     // Set 409 conflict status code due to user already existing
     res.status(409);
-    res.json(user);
   } else {
     const result = await prisma.user.create({
       data: {
         token: token
-      }
+      },
+      include: { sessions: false }
     })
     res.json(result);
   }

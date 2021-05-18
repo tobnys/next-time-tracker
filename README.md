@@ -1,20 +1,34 @@
+## Summary
+
+Solution for the Pento tech challenge.
+
 ## Getting started
 
 1. yarn
 2. npx prisma migrate dev
 3. yarn start
 
+## Tech stack
+
+This full-stack application can be run solely through a framework called Next which is a full-stack framework designed to streamline application creation in a very dynamic way.
+
+Database layer is SQLite with Prisma as the ORM.
+
+React is used along with TypeScript.
+
+Basic CSS modules for styling.
 
 ## REST API documentation
 
 ### `GET`
 
-- `/api/session/:id`: Fetch a single session by its `id`
-- `/api/user/:token`: Fetch user by `token`
+- `/api/sessions/:id`: Fetch a single session by its `id`
+- `/api/user/:token`: Fetch user by their `token`
+- `/api/user/:token/sessions`: Fetch a sessions from a user, identifying the user by their `token`
 
 ### `POST`
 
-- `/api/session`: Create a new session
+- `/api/sessions`: Create a new session
   - Body:
     - `userId: Number` (required): User author
     - `name: String` (optional): Name of the session
@@ -24,11 +38,3 @@
 - `/api/user`: Create a new user
   - Body:
     - `token: String` (required): Session (cookie) token
-
-### `PUT`
-
-- 
-
-### `DELETE`
-  
-- 

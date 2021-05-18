@@ -24,7 +24,7 @@ Basic CSS modules for styling.
 
 - `/api/sessions/:id`: Fetch a single session by its `id`
 - `/api/user/:token`: Fetch user by their `token`
-- `/api/user/:token/sessions`: Fetch a sessions from a user, identifying the user by their `token`
+- `/api/user/:token/sessions`: Fetch sessions from a single user, identifying the user by their `token`
 
 ### `POST`
 

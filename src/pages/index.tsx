@@ -30,9 +30,7 @@ export default function Home({ initialUser }: State) {
   const [user, setUser] = useState<User>(initialUser);
 
   // Put sessions in a separate state to avoid manipulating the user state.
-  const [sessions, setSessions] = useState<Session[]>(initialUser.sessions);
-  
-  console.log("SESSIONS", sessions)
+  const [sessions, setSessions] = useState<Session[] | null>(initialUser ? initialUser.sessions : null);
 
   function saveSession() {
     fetch(`http://localhost:3000/api/sessions/`, {
@@ -47,7 +45,6 @@ export default function Home({ initialUser }: State) {
     })
       .then(res => res.json())
       .then(data => {
-        console.log("USER SAVE DTATA", data)
         setSessions(data.sessions);
       })
       .catch(err => console.error(err));
@@ -64,7 +61,6 @@ export default function Home({ initialUser }: State) {
       .catch(err => console.error(err));
   }
 
-
   useEffect(() => {
     // Check session / user
     if(!user && !Cookies.get("token")) {
@@ -77,7 +73,6 @@ export default function Home({ initialUser }: State) {
       })
         .then(res => res.json())
         .then(data => {
-          console.log("USER CREATAE CLIENT SIDE", data)
           setUser(data);
 
           // Create cookie for session management if successful
@@ -94,8 +89,6 @@ export default function Home({ initialUser }: State) {
       return () => clearInterval(timer);
     }
   }, [runTracker]);
-
-  console.log("USER", user);
 
   return (
     <div className={styles.container}>
@@ -214,16 +207,25 @@ export default function Home({ initialUser }: State) {
 export async function getServerSideProps(context: any) {
   if(context.req.cookies.token) {
     const token = JSON.parse(context.req.cookies.token).token;
-    const res: any = await fetch(`http://localhost:3000/api/user/${token}`)
+    const data: any = await fetch(`http://localhost:3000/api/user/${token}`)
       .catch(err => console.error(err));
 
-    const user = await res.json();
+    if(data.status === 200) {
+      const user = await data.json();
 
-    return {
-      props: {
-        initialUser: user
-      },
+      return {
+        props: {
+          initialUser: user
+        },
+      }
+    } else {
+      return {
+        props: {
+          initialUser: null
+        },
+      }
     }
+
   } else {
     return {
       props: {
